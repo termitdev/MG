@@ -8,12 +8,22 @@ import { Differentials } from "@/components/landing/Differentials";
 import { Faq } from "@/components/landing/Faq";
 import { Cta } from "@/components/landing/Cta";
 import { Footer } from "@/components/landing/Footer";
+import { ExamRequirements } from "@/components/landing/ExamRequirements";
+import { ExamPurpose } from "@/components/landing/ExamPurpose";
+import { companyStructuredData } from "@/config/company";
 
 const title = "MUGUI — Exame Toxicológico com precisão e atendimento humano";
-const description = "Clínica MUGUI: exame toxicológico com segurança, agilidade e rigor laboratorial. Agende seu exame.";
+const description =
+  "Clínica MUGUI: exame toxicológico com segurança, agilidade e rigor laboratorial. Agende seu exame.";
 
 export const Route = createFileRoute("/")({
   head: () => ({
+    scripts: [
+      {
+        type: "application/ld+json",
+        children: JSON.stringify(companyStructuredData).replace(/</g, "\\u003c"),
+      },
+    ],
     meta: [
       { title },
       { name: "description", content: description },
@@ -34,6 +44,8 @@ function Index() {
         <Hero />
         <About />
         <Exam />
+        <ExamRequirements />
+        <ExamPurpose />
         <Process />
         <Differentials />
         <Faq />

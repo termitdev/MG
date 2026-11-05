@@ -2,11 +2,11 @@ import careImg from "@/assets/care.jpg";
 import { Check } from "lucide-react";
 import { Reveal } from "./Reveal";
 
-const items = ["Atendimento humano e acolhedor", "Processo ágil e organizado", "Rigor e rastreabilidade laboratorial", "Ambiente moderno e seguro"];
-// Placeholders — replace with real MUGUI data.
-const stats = [
-  { value: "00%", label: "clientes satisfeitos" },
-  { value: "00 min", label: "tempo médio de atendimento" },
+const items = [
+  "Atendimento humano e acolhedor",
+  "Processo ágil e organizado",
+  "Rigor e rastreabilidade laboratorial",
+  "Ambiente moderno e seguro",
 ];
 
 export function Differentials() {
@@ -29,24 +29,22 @@ export function Differentials() {
             </span>
           </div>
           <Reveal className="order-1 lg:order-2 lg:pl-6">
-            <p className="text-sm font-medium uppercase tracking-[0.2em] text-primary-foreground/70">Diferenciais</p>
-            <h2 className="mt-4 text-4xl font-semibold leading-tight sm:text-5xl">Por que escolher a MUGUI.</h2>
+            <p className="text-sm font-medium uppercase tracking-[0.2em] text-primary-foreground/70">
+              Diferenciais
+            </p>
+            <h2 className="mt-4 text-4xl font-semibold leading-tight sm:text-5xl">
+              Por que escolher a MUGUI.
+            </h2>
             <ul className="mt-8 space-y-3">
               {items.map((t) => (
                 <li key={t} className="flex items-center gap-3">
-                  <span className="grid size-6 place-items-center rounded-full bg-primary-foreground/15"><Check className="size-3.5" /></span>
+                  <span className="grid size-6 place-items-center rounded-full bg-primary-foreground/15">
+                    <Check className="size-3.5" />
+                  </span>
                   {t}
                 </li>
               ))}
             </ul>
-            <div className="mt-12 grid grid-cols-2 gap-8 border-t border-primary-foreground/20 pt-8">
-              {stats.map((s) => (
-                <div key={s.label}>
-                  <div className="font-display text-4xl font-semibold">{s.value}</div>
-                  <div className="mt-1 text-sm text-primary-foreground/70">{s.label}</div>
-                </div>
-              ))}
-            </div>
           </Reveal>
         </div>
       </div>

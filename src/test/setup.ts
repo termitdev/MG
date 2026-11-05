@@ -1,20 +1,36 @@
 import "@testing-library/jest-dom/vitest";
+import { vi } from "vitest";
 
-Object.defineProperty(window, "scrollTo", {
-  writable: true,
-  value: () => {},
-});
+vi.stubGlobal(
+  "IntersectionObserver",
+  class {
+    observe() {}
+    unobserve() {}
+    disconnect() {}
+  },
+);
 
-Object.defineProperty(window, "matchMedia", {
-  writable: true,
-  value: (query: string) => ({
-    matches: false,
-    media: query,
-    onchange: null,
-    addListener: () => {},
-    removeListener: () => {},
-    addEventListener: () => {},
-    removeEventListener: () => {},
-    dispatchEvent: () => {},
-  }),
-});
+if (typeof window !== "undefined") {
+  Object.defineProperty(HTMLCanvasElement.prototype, "getContext", {
+    configurable: true,
+    value: () => null,
+  });
+  Object.defineProperty(window, "scrollTo", {
+    writable: true,
+    value: () => {},
+  });
+
+  Object.defineProperty(window, "matchMedia", {
+    writable: true,
+    value: (query: string) => ({
+      matches: false,
+      media: query,
+      onchange: null,
+      addListener: () => {},
+      removeListener: () => {},
+      addEventListener: () => {},
+      removeEventListener: () => {},
+      dispatchEvent: () => {},
+    }),
+  });
+}

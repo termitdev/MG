@@ -1,26 +1,19 @@
 import { cn } from "@/lib/utils";
 
-/**
- * Slot for the official MUGUI logo.
- * To use the official file: upload it, import it here and set LOGO_SRC.
- * Until then a neutral typographic placeholder is shown (not a designed logo).
- */
-const LOGO_SRC: string | null = null;
-
-export function Logo({ className, inverted }: { className?: string; inverted?: boolean }) {
-  if (LOGO_SRC) {
-    return <img src={LOGO_SRC} alt="MUGUI" className={cn("h-8 w-auto", className)} />;
-  }
+// The official image is shared by the header and footer.
+export function Logo({ className }: { className?: string }) {
   return (
     <span
-      aria-label="MUGUI"
       className={cn(
-        "font-display text-xl font-bold tracking-[0.2em]",
-        inverted ? "text-primary-foreground" : "text-foreground",
+        "relative inline-block h-7 w-24 shrink-0 align-middle sm:h-8 sm:w-28",
         className,
       )}
     >
-      MUGUI
+      <img
+        src="/logomg.png"
+        alt="MUGUI"
+        className="pointer-events-none absolute left-0 top-1/2 h-auto w-full -translate-y-1/2"
+      />
     </span>
   );
 }

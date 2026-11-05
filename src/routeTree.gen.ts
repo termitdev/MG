@@ -10,33 +10,150 @@
 
 import { Route as rootRouteImport } from './routes/__root'
 import { Route as IndexRouteImport } from './routes/index'
+import { Route as AcessoRouteImport } from './routes/acesso'
+import { Route as AgendarRouteImport } from './routes/agendar'
+import { Route as InternoRouteImport } from './routes/interno'
+import { Route as LoginRouteImport } from './routes/login'
+import { Route as PrivacidadeRouteImport } from './routes/privacidade'
+import { Route as ApiSplatRouteImport } from './routes/api.$'
+import { Route as AuthCallbackRouteImport } from './routes/auth.callback'
+import { Route as InternoIndexRouteImport } from './routes/interno.index'
+import { Route as InternoSplatRouteImport } from './routes/interno.$'
 
 const IndexRoute = IndexRouteImport.update({
   id: '/',
   path: '/',
   getParentRoute: () => rootRouteImport,
 } as any)
+const AcessoRoute = AcessoRouteImport.update({
+  id: '/acesso',
+  path: '/acesso',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AgendarRoute = AgendarRouteImport.update({
+  id: '/agendar',
+  path: '/agendar',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InternoRoute = InternoRouteImport.update({
+  id: '/interno',
+  path: '/interno',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const LoginRoute = LoginRouteImport.update({
+  id: '/login',
+  path: '/login',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const PrivacidadeRoute = PrivacidadeRouteImport.update({
+  id: '/privacidade',
+  path: '/privacidade',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const ApiSplatRoute = ApiSplatRouteImport.update({
+  id: '/api/$',
+  path: '/api/$',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const AuthCallbackRoute = AuthCallbackRouteImport.update({
+  id: '/auth/callback',
+  path: '/auth/callback',
+  getParentRoute: () => rootRouteImport,
+} as any)
+const InternoIndexRoute = InternoIndexRouteImport.update({
+  id: '/',
+  path: '/',
+  getParentRoute: () => InternoRoute,
+} as any)
+const InternoSplatRoute = InternoSplatRouteImport.update({
+  id: '/$',
+  path: '/$',
+  getParentRoute: () => InternoRoute,
+} as any)
 
 export interface FileRoutesByFullPath {
   '/': typeof IndexRoute
+  '/acesso': typeof AcessoRoute
+  '/agendar': typeof AgendarRoute
+  '/interno': typeof InternoRouteWithChildren
+  '/login': typeof LoginRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/api/$': typeof ApiSplatRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/interno/$': typeof InternoSplatRoute
+  '/interno/': typeof InternoIndexRoute
 }
 export interface FileRoutesByTo {
   '/': typeof IndexRoute
+  '/acesso': typeof AcessoRoute
+  '/agendar': typeof AgendarRoute
+  '/login': typeof LoginRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/api/$': typeof ApiSplatRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/interno/$': typeof InternoSplatRoute
+  '/interno': typeof InternoIndexRoute
 }
 export interface FileRoutesById {
   __root__: typeof rootRouteImport
   '/': typeof IndexRoute
+  '/acesso': typeof AcessoRoute
+  '/agendar': typeof AgendarRoute
+  '/interno': typeof InternoRouteWithChildren
+  '/login': typeof LoginRoute
+  '/privacidade': typeof PrivacidadeRoute
+  '/api/$': typeof ApiSplatRoute
+  '/auth/callback': typeof AuthCallbackRoute
+  '/interno/$': typeof InternoSplatRoute
+  '/interno/': typeof InternoIndexRoute
 }
 export interface FileRouteTypes {
   fileRoutesByFullPath: FileRoutesByFullPath
-  fullPaths: '/'
+  fullPaths:
+    | '/'
+    | '/acesso'
+    | '/agendar'
+    | '/interno'
+    | '/login'
+    | '/privacidade'
+    | '/api/$'
+    | '/auth/callback'
+    | '/interno/$'
+    | '/interno/'
   fileRoutesByTo: FileRoutesByTo
-  to: '/'
-  id: '__root__' | '/'
+  to:
+    | '/'
+    | '/acesso'
+    | '/agendar'
+    | '/login'
+    | '/privacidade'
+    | '/api/$'
+    | '/auth/callback'
+    | '/interno/$'
+    | '/interno'
+  id:
+    | '__root__'
+    | '/'
+    | '/acesso'
+    | '/agendar'
+    | '/interno'
+    | '/login'
+    | '/privacidade'
+    | '/api/$'
+    | '/auth/callback'
+    | '/interno/$'
+    | '/interno/'
   fileRoutesById: FileRoutesById
 }
 export interface RootRouteChildren {
   IndexRoute: typeof IndexRoute
+  AcessoRoute: typeof AcessoRoute
+  AgendarRoute: typeof AgendarRoute
+  InternoRoute: typeof InternoRouteWithChildren
+  LoginRoute: typeof LoginRoute
+  PrivacidadeRoute: typeof PrivacidadeRoute
+  ApiSplatRoute: typeof ApiSplatRoute
+  AuthCallbackRoute: typeof AuthCallbackRoute
 }
 
 declare module '@tanstack/react-router' {
@@ -48,11 +165,94 @@ declare module '@tanstack/react-router' {
       preLoaderRoute: typeof IndexRouteImport
       parentRoute: typeof rootRouteImport
     }
+    '/acesso': {
+      id: '/acesso'
+      path: '/acesso'
+      fullPath: '/acesso'
+      preLoaderRoute: typeof AcessoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/agendar': {
+      id: '/agendar'
+      path: '/agendar'
+      fullPath: '/agendar'
+      preLoaderRoute: typeof AgendarRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interno': {
+      id: '/interno'
+      path: '/interno'
+      fullPath: '/interno'
+      preLoaderRoute: typeof InternoRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/login': {
+      id: '/login'
+      path: '/login'
+      fullPath: '/login'
+      preLoaderRoute: typeof LoginRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/privacidade': {
+      id: '/privacidade'
+      path: '/privacidade'
+      fullPath: '/privacidade'
+      preLoaderRoute: typeof PrivacidadeRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/api/$': {
+      id: '/api/$'
+      path: '/api/$'
+      fullPath: '/api/$'
+      preLoaderRoute: typeof ApiSplatRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/auth/callback': {
+      id: '/auth/callback'
+      path: '/auth/callback'
+      fullPath: '/auth/callback'
+      preLoaderRoute: typeof AuthCallbackRouteImport
+      parentRoute: typeof rootRouteImport
+    }
+    '/interno/': {
+      id: '/interno/'
+      path: '/'
+      fullPath: '/interno/'
+      preLoaderRoute: typeof InternoIndexRouteImport
+      parentRoute: typeof InternoRoute
+    }
+    '/interno/$': {
+      id: '/interno/$'
+      path: '/$'
+      fullPath: '/interno/$'
+      preLoaderRoute: typeof InternoSplatRouteImport
+      parentRoute: typeof InternoRoute
+    }
   }
 }
 
+interface InternoRouteChildren {
+  InternoSplatRoute: typeof InternoSplatRoute
+  InternoIndexRoute: typeof InternoIndexRoute
+}
+
+const InternoRouteChildren: InternoRouteChildren = {
+  InternoSplatRoute: InternoSplatRoute,
+  InternoIndexRoute: InternoIndexRoute,
+}
+
+const InternoRouteWithChildren =
+  InternoRoute._addFileChildren(InternoRouteChildren)
+
 const rootRouteChildren: RootRouteChildren = {
   IndexRoute: IndexRoute,
+  AcessoRoute: AcessoRoute,
+  AgendarRoute: AgendarRoute,
+  InternoRoute: InternoRouteWithChildren,
+  LoginRoute: LoginRoute,
+  PrivacidadeRoute: PrivacidadeRoute,
+  ApiSplatRoute: ApiSplatRoute,
+  AuthCallbackRoute: AuthCallbackRoute,
 }
 export const routeTree = rootRouteImport
   ._addFileChildren(rootRouteChildren)

@@ -2,9 +2,13 @@ import "./lib/error-capture";
 
 import { consumeLastCapturedError } from "./lib/error-capture";
 import { renderErrorPage } from "./lib/error-page";
+import { securityHeaders } from "./lib/security";
 
 type ServerEntry = {
-  fetch: (request: Request, env: unknown, ctx: unknown) => Promise<Response> | Response;
+  fetch: (
+    request: Request,
+    options?: { context?: { nonce: string } },
+  ) => Promise<Response> | Response;
 };
 
 let serverEntryPromise: Promise<ServerEntry> | undefined;
@@ -45,17 +49,41 @@ function isH3SwallowedErrorBody(body: string): boolean {
 }
 
 export default {
-  async fetch(request: Request, env: unknown, ctx: unknown) {
+  async fetch(request: Request) {
+    const nonce = btoa(String.fromCharCode(...crypto.getRandomValues(new Uint8Array(18))));
+    const protect = (response: Response) => {
+      const protectedResponse = new Response(response.body, response);
+      securityHeaders(request, nonce, process.env["NODE_ENV"] === "production").forEach(
+        (value, key) => protectedResponse.headers.set(key, value),
+      );
+      if (protectedResponse.headers.get("Content-Type")?.includes("text/html")) {
+        protectedResponse.headers.set("Cache-Control", "no-store, private");
+      }
+      return protectedResponse;
+    };
     try {
       const handler = await getServerEntry();
-      const response = await handler.fetch(request, env, ctx);
-      return await normalizeCatastrophicSsrResponse(response);
+      const requestHeaders = new Headers(request.headers);
+      requestHeaders.set("x-mugui-csp-nonce", nonce);
+      // srvx supplies a Request-compatible wrapper in development; native Request cloning
+      // requires private runtime internals that this wrapper does not own.
+      const incoming = new Request(request.url, {
+        method: request.method,
+        headers: requestHeaders,
+        ...(request.method === "GET" || request.method === "HEAD"
+          ? {}
+          : { body: request.body, duplex: "half" }),
+      });
+      const response = await handler.fetch(incoming, { context: { nonce } });
+      return protect(await normalizeCatastrophicSsrResponse(response));
     } catch (error) {
       console.error(error);
-      return new Response(renderErrorPage(), {
-        status: 500,
-        headers: { "content-type": "text/html; charset=utf-8" },
-      });
+      return protect(
+        new Response(renderErrorPage(), {
+          status: 500,
+          headers: { "content-type": "text/html; charset=utf-8" },
+        }),
+      );
     }
   },
 };

@@ -1,0 +1,25 @@
+project_id = "mugui-local"
+
+[auth]
+enable_signup = false
+site_url = "http://localhost:8080"
+additional_redirect_urls = ["http://localhost:8080/acesso"]
+
+[auth.email]
+enable_signup = false
+enable_confirmations = true
+
+[auth.mfa.totp]
+enroll_enabled = true
+verify_enabled = true
+
+[auth.rate_limit]
+sign_in_sign_ups = 10
+token_verifications = 10
+email_sent = 3
+
+[functions.integration-dispatch]
+verify_jwt = false
+
+[functions.laboratory-webhook]
+verify_jwt = false
